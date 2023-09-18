@@ -1,10 +1,10 @@
+import { BsCardImage } from "react-icons/bs";
 import cloudIcon from "../../assets/cloud.svg";
 import "./viewer.css";
 type viewerProps = {
   handleClose: () => void;
   image: string;
   name: string;
-  icon: string;
   date: string;
   iconBg: string;
 };
@@ -12,13 +12,12 @@ type viewerProps = {
 const FileViewer = ({
   date,
   handleClose,
-  icon,
   image,
   name,
   iconBg,
 }: viewerProps) => {
   return (
-    <div className="fileViewer">
+    <div className="fileViewer" onClick={handleClose}>
       <div className="fileViewer-modal">
         <div className="view-header">
           <div className="dnld-icon">
@@ -60,8 +59,8 @@ const FileViewer = ({
             <img src={image} alt="file" />
           </div>
           <div className="file-details mt-1 flex-items items-center">
-            <div className="file-icon" style={{ backgroundColor: iconBg }}>
-              <img src={icon} alt="icon" />
+            <div className="file-icon" style={{ backgroundColor: "#EBFFEC" }}>
+              <BsCardImage />
             </div>
             <div>
               <h3 className="file-name h3-style">{name}</h3>

@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { filetype } from "../types";
 
 // Define a TypeScript interface for the context
 interface FileContextProps {
@@ -7,6 +8,9 @@ interface FileContextProps {
   searchTerm: string;
   updateSortBy: (value: string) => void;
   updateSearchTerm: (value: string) => void;
+  files: filetype[];
+  folders: filetype[];
+  loading: boolean;
 }
 
 // Create a new context
@@ -27,6 +31,9 @@ interface FileProviderProps {
 export const FileProvider: React.FC<FileProviderProps> = ({ children }) => {
   const [sortBy, setSortBy] = useState("name"); // Initial sorting option
   const [searchTerm, setSearchTerm] = useState("");
+  const [files, setFiles] = useState<filetype[]>([]);
+  const [folders, setFolders] = useState<filetype[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Function to update the sorting option
   const updateSortBy = (value: string) => {
@@ -38,11 +45,34 @@ export const FileProvider: React.FC<FileProviderProps> = ({ children }) => {
     setSearchTerm(value);
   };
 
+  useEffect(() => {
+    fetch("https://fc-test.onrender.com/", {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        setFiles(data.filter((file: filetype) => file.type === "file"));
+        setFolders(data.filter((file: filetype) => file.type === "folder"));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   const contextValue: FileContextProps = {
     sortBy,
     searchTerm,
     updateSortBy,
     updateSearchTerm,
+    files,
+    folders,
+    loading,
   };
 
   return (

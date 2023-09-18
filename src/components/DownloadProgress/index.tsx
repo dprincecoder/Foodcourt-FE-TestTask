@@ -1,29 +1,24 @@
+import { AiFillFile } from "react-icons/ai";
+import pdfIcon from "../../assets/pdf.svg";
+import xlsxIcon from "../../assets/xls.svg";
+import { getDocumentIcon } from "../../helpers";
+import "./progress.css";
+
 type progressProps = {
-  folderName: string;
+  fileName: string;
   progress: number;
   percentage: number;
   size: string;
-  icon: string;
 };
 
 const DownloadProgress = ({
-  folderName,
+  fileName,
   percentage,
   progress,
-  icon,
   size,
 }: progressProps) => {
   return (
-    <div
-      className="download-progress"
-      style={{
-        position: "absolute",
-        top: "10px",
-        right: "10px",
-        zIndex: 100,
-        backgroundColor: "#fff",
-      }}
-    >
+    <div className="download-progress">
       <div className="folder-item flex-items items-center">
         {progress >= 100 ? (
           <div
@@ -49,16 +44,25 @@ const DownloadProgress = ({
           </div>
         ) : (
           <div
-            className="folder-icon mr-1"
+            className="mr-1 progress-container"
             style={{
               background: `conic-gradient(#32BD7A ${progress}%, #F2F2F2 0%)`,
             }}
           >
-            <img src={icon} alt="folder" />
+            <div className="inner">
+              {" "}
+              {getDocumentIcon(fileName) === "pdf-icon" ? (
+                <img src={pdfIcon} alt="file" />
+              ) : getDocumentIcon(fileName) === "xlsx-icon" ? (
+                <img src={xlsxIcon} alt="file" />
+              ) : (
+                <AiFillFile />
+              )}
+            </div>
           </div>
         )}
         <div className="folder-details">
-          <h3 className="folder-name h3-style">{folderName}</h3>
+          <h3 className="folder-name h3-style">{fileName}</h3>
           <p className="folder-size p-style">
             {size}{" "}
             <span>
