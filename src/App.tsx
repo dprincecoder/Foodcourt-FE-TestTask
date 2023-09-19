@@ -53,48 +53,50 @@ function App() {
     setShowModal(true);
   };
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={
-          <div className="folder-dir container">
-            {showmodal && (
-              <FileViewer
-                name={clickedFile?.name || ""}
-                handleClose={() => setShowModal(false)}
-                image={clickedFile?.src || ""}
-                date={clickedFile?.created_at || ""}
-                iconBg={clickedFile?.iconBgColor || ""}
+    <>
+      {showmodal && (
+        <FileViewer
+          name={clickedFile?.name || ""}
+          handleClose={() => setShowModal(false)}
+          image={clickedFile?.src || ""}
+          date={clickedFile?.created_at || ""}
+          iconBg={clickedFile?.iconBgColor || ""}
+        />
+      )}
+      {showprogress && (
+        <DownloadProgress
+          fileName={clickedFile?.name || ""}
+          progress={downloadProgress}
+          percentage={downpecentage}
+          size={clickedFile?.size || "10kb"}
+        />
+      )}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="folder-dir container">
+              <div className="input-actions width-full mb-1 flex-items items-center justify-between">
+                <SortSelect />
+                <SearchInput />
+              </div>
+              <Folders folders={folders} />
+              <Files
+                openImgPreview={fileFunc}
+                downloadfile={downloadfunc}
+                files={files}
               />
-            )}
-            {showprogress && (
-              <DownloadProgress
-                fileName={clickedFile?.name || ""}
-                progress={downloadProgress}
-                percentage={downpecentage}
-                size={clickedFile?.size || "10kb"}
-              />
-            )}
-            <div className="input-actions width-full mb-1 flex-items items-center justify-between">
-              <SortSelect />
-              <SearchInput />
             </div>
-            <Folders folders={folders} />
-            <Files
-              openImgPreview={fileFunc}
-              downloadfile={downloadfunc}
-              files={files}
-            />
-          </div>
-        }
-      />
-      <Route
-        path="/folder/:id"
-        element={
-          <Folder openImgPreview={fileFunc} downloadfile={downloadfunc} />
-        }
-      />
-    </Routes>
+          }
+        />
+        <Route
+          path="/folder/:id"
+          element={
+            <Folder openImgPreview={fileFunc} downloadfile={downloadfunc} />
+          }
+        />
+      </Routes>
+    </>
   );
 }
 

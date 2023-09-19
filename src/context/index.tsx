@@ -55,7 +55,6 @@ export const FileProvider: React.FC<FileProviderProps> = ({ children }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setFiles(data.filter((file: filetype) => file.type === "file"));
         setFolders(data.filter((file: filetype) => file.type === "folder"));
         setLoading(false);
