@@ -76,7 +76,7 @@ function App() {
           path="/"
           element={
             <div className="folder-dir container">
-              <div className="input-actions width-full mb-1 flex-items items-center justify-between">
+              <div className="input-actions width-full mb-1 flex-items flex-wrap items-center justify-between">
                 <SortSelect />
                 <SearchInput />
               </div>

@@ -27,7 +27,7 @@ const Files = ({ openImgPreview, downloadfile, files }: fileprops) => {
     const sorted = [...files].sort((a, b) => {
       if (sortBy === "name") {
         return a.name.localeCompare(b.name);
-      } else if (sortBy === "date") {
+      } else if (sortBy === "timeCreated") {
         return Number(a.created_at) - Number(b.created_at);
       }
       return 0;

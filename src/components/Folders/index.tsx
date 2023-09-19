@@ -17,11 +17,10 @@ const Folders = ({ folders }: folderprops) => {
   const [searchedFolders, setSearchedFolders] = useState([...folders]);
 
   useEffect(() => {
-    // Apply sorting based on the sortBy criteria
     const sorted = [...folders].sort((a, b) => {
       if (sortBy === "name") {
         return a.name.localeCompare(b.name);
-      } else if (sortBy === "date") {
+      } else if (sortBy === "timeCreated") {
         return Number(a.created_at) - Number(b.created_at);
       }
       return 0;
@@ -40,7 +39,6 @@ const Folders = ({ folders }: folderprops) => {
   }, [sortedFolders, searchTerm]);
 
   const goToFolder = (folder: filetype) => {
-    console.log(folder);
     navigate(`/folder/${folder.id}`);
   };
 
