@@ -81,7 +81,16 @@ const Folder = ({ downloadfile, openImgPreview }: folderprops) => {
                 ) : (
                   <div
                     className="file-icon-type"
-                    onDoubleClick={() => downloadfile(file)}
+                    onDoubleClick={() => {
+                      downloadfile(file);
+
+                      // const link = document.createElement("a");
+                      // link.href = file.src;
+                      // link.download = file.name;
+                      // document.body.appendChild(link);
+                      // link.click();
+                      // document.body.removeChild(link);
+                    }}
                   >
                     {getDocumentIcon(file.name) === "pdf-icon" ? (
                       <img src={pdfIcon} alt="file" />
